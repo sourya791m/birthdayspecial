@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 <title>Happy Birthday, kuchupuchuu 😘😗</title>
+<meta name="description" content="A premium, romantic, interactive birthday celebration website made for kuchupuchuu — 10th August.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -231,6 +232,123 @@ body::before{
 @keyframes sparkleFade{
   0%{ opacity:1; transform:scale(1) translateY(0); }
   100%{ opacity:0; transform:scale(0.2) translateY(-24px); }
+}
+
+/* ============================================================
+   NIGHT SKY LAYER — twinkling stars, moon, shooting stars, fireflies, aurora
+   (kept low-opacity across the whole site so it never fights the pink/gold
+   palette, then intensifies behind the finale for a "dark romantic" close)
+   ============================================================ */
+#sky-layer{ position:fixed; inset:0; z-index:1; pointer-events:none; overflow:hidden; }
+.sky-moon{
+  position:absolute; top:6%; right:7%; width:64px; height:64px; border-radius:50%;
+  background:radial-gradient(circle at 35% 32%, #fffdf3, var(--gold-300) 55%, var(--gold-500) 100%);
+  box-shadow:0 0 40px 10px rgba(243,223,168,0.45), 0 0 90px 30px rgba(255,177,204,0.25);
+  opacity:0.55;
+  animation:moonDrift 22s ease-in-out infinite;
+}
+@keyframes moonDrift{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(14px);} }
+.sky-star{
+  position:absolute; width:3px; height:3px; border-radius:50%;
+  background:#fff; box-shadow:0 0 6px 1px rgba(255,255,255,0.8);
+  animation:twinkle 3s ease-in-out infinite;
+}
+@keyframes twinkle{ 0%,100%{ opacity:0.15; transform:scale(0.8);} 50%{ opacity:0.95; transform:scale(1.3);} }
+.shooting-star{
+  position:absolute; width:2px; height:2px; background:#fff; border-radius:50%;
+  box-shadow:0 0 0 1px rgba(255,255,255,0.4);
+  opacity:0;
+}
+.shooting-star::before{
+  content:""; position:absolute; top:50%; right:0; width:90px; height:1.5px;
+  background:linear-gradient(90deg, rgba(255,255,255,0.9), transparent);
+  transform:translateY(-50%);
+}
+.shooting-star.fire{ animation:shootAcross 1.4s cubic-bezier(.3,.6,.4,1) forwards; }
+@keyframes shootAcross{
+  0%{ opacity:0; transform:translate(0,0); }
+  8%{ opacity:1; }
+  85%{ opacity:0.8; }
+  100%{ opacity:0; transform:translate(-320px,180px); }
+}
+.firefly{
+  position:absolute; width:5px; height:5px; border-radius:50%;
+  background:radial-gradient(circle, #fff6c8, var(--gold-500));
+  box-shadow:0 0 8px 3px rgba(223,180,95,0.6);
+  animation:fireflyDrift linear infinite, fireflyGlow 2.4s ease-in-out infinite;
+}
+@keyframes fireflyDrift{
+  0%{ transform:translate(0,0); }
+  25%{ transform:translate(30px,-24px); }
+  50%{ transform:translate(-14px,-46px); }
+  75%{ transform:translate(-36px,-12px); }
+  100%{ transform:translate(0,0); }
+}
+@keyframes fireflyGlow{ 0%,100%{ opacity:0.35;} 50%{ opacity:1;} }
+.aurora-glow{
+  position:absolute; left:50%; top:10%; width:140vw; height:60vh; transform:translateX(-50%);
+  background:radial-gradient(ellipse at center, rgba(232,92,138,0.18), rgba(223,180,95,0.12) 45%, transparent 70%);
+  filter:blur(30px);
+  opacity:0; transition:opacity 1.4s ease;
+  pointer-events:none;
+}
+.aurora-glow.show{ opacity:1; }
+
+/* mouse trail hearts (separate from the sparkle-dot glow trail) */
+.trail-heart{
+  position:fixed; pointer-events:none; z-index:9997; font-size:0.85rem; color:var(--rose-600);
+  animation:trailHeartFade 1s ease-out forwards;
+}
+@keyframes trailHeartFade{
+  0%{ opacity:0.9; transform:translate(-50%,-50%) scale(1) rotate(0deg); }
+  100%{ opacity:0; transform:translate(-50%,-160%) scale(0.5) rotate(20deg); }
+}
+
+/* ============================================================
+   HIDDEN SECRET MESSAGE POPUP
+   ============================================================ */
+.secret-trigger{ cursor:pointer; }
+#secretOverlay{
+  position:fixed; inset:0; z-index:9500; display:flex; align-items:center; justify-content:center;
+  background:rgba(78,19,41,0.55); backdrop-filter:blur(6px);
+  opacity:0; visibility:hidden; transition:opacity .4s ease, visibility .4s ease; padding:20px;
+}
+#secretOverlay.show{ opacity:1; visibility:visible; }
+.secret-card{
+  max-width:380px; text-align:center; padding:34px 28px; position:relative;
+  transform:scale(0.85); transition:transform .4s cubic-bezier(.34,1.4,.64,1);
+}
+#secretOverlay.show .secret-card{ transform:scale(1); }
+.secret-card .icon{ font-size:2.2rem; margin-bottom:12px; }
+.secret-card p{ font-family:var(--font-script); font-style:italic; font-size:1.15rem; color:var(--wine-900); line-height:1.7; }
+.secret-close{
+  margin-top:20px; border:none; background:linear-gradient(120deg,var(--rose-600),var(--pink-500));
+  color:#fff; padding:10px 26px; border-radius:30px; font-family:var(--font-body); font-weight:700;
+  cursor:pointer;
+}
+
+/* ============================================================
+   GALLERY LIGHTBOX
+   ============================================================ */
+#lightbox{
+  position:fixed; inset:0; z-index:9500; display:flex; align-items:center; justify-content:center;
+  background:rgba(78,19,41,0.7); backdrop-filter:blur(8px); padding:20px;
+  opacity:0; visibility:hidden; transition:opacity .4s ease, visibility .4s ease;
+}
+#lightbox.show{ opacity:1; visibility:visible; }
+.lightbox-frame{
+  width:min(420px,90vw); aspect-ratio:1/1; border-radius:22px; border:4px solid #fff;
+  background:linear-gradient(140deg, var(--blush-100), var(--pink-300));
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px;
+  box-shadow:var(--shadow-deep); transform:scale(0.88); transition:transform .4s cubic-bezier(.34,1.4,.64,1);
+}
+#lightbox.show .lightbox-frame{ transform:scale(1); }
+.lightbox-frame .icon{ font-size:3rem; }
+.lightbox-frame span{ font-family:var(--font-script); font-style:italic; color:var(--wine-700); }
+.lightbox-close{
+  position:absolute; top:24px; right:28px; width:42px; height:42px; border-radius:50%;
+  border:1px solid rgba(255,255,255,0.5); background:rgba(255,255,255,0.2); color:#fff;
+  font-size:1.3rem; cursor:pointer; display:flex; align-items:center; justify-content:center;
 }
 
 /* ============================================================
@@ -531,7 +649,14 @@ nav{
   min-height:100svh; position:relative; z-index:2;
   display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
   padding:60px 20px; overflow:hidden;
+  background:linear-gradient(180deg, transparent, rgba(78,19,41,0.06) 30%, rgba(78,19,41,0.55) 75%, rgba(30,8,17,0.85));
 }
+.finale::before{
+  content:""; position:absolute; inset:0; z-index:-1;
+  background:radial-gradient(ellipse 80% 60% at 50% 100%, rgba(78,19,41,0.85), transparent 70%);
+  opacity:0; transition:opacity 1.6s ease;
+}
+.finale.deepen::before{ opacity:1; }
 .finale-heart{ font-size:clamp(3rem,10vw,6rem); color:var(--rose-600); animation:heartBeat 1.4s ease-in-out infinite; filter:drop-shadow(0 10px 30px rgba(232,92,138,0.6)); }
 @keyframes heartBeat{ 0%,100%{ transform:scale(1);} 25%{ transform:scale(1.15);} 40%{ transform:scale(0.98);} 60%{ transform:scale(1.1);} }
 .finale-title{
@@ -539,9 +664,22 @@ nav{
   font-size:clamp(1.9rem,6vw,3.4rem); color:var(--wine-900); margin-top:22px;
   text-shadow:0 8px 30px rgba(232,92,138,0.35);
 }
-.finale-sub{ margin-top:14px; font-family:var(--font-script); font-style:italic; color:var(--wine-700); font-size:1.2rem; }
+.finale-sub{ margin-top:14px; font-family:var(--font-script); font-style:italic; color:var(--wine-700); font-size:1.2rem; transition:color 1.2s ease; }
+.finale.deepen .finale-title{ color:var(--gold-300); transition:color 1.2s ease; }
+.finale.deepen .finale-sub{ color:var(--blush-100); }
 
-footer{ position:relative; z-index:2; text-align:center; padding:34px 20px 44px; font-size:0.85rem; color:var(--wine-700); opacity:0.75; }
+footer{ position:relative; z-index:2; text-align:center; padding:34px 20px 44px; font-size:0.85rem; color:var(--wine-700); opacity:0.85; }
+.credit-line{
+  margin-top:10px; font-size:0.8rem; letter-spacing:0.02em;
+  display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap;
+}
+.credit-name{ font-family:var(--font-display); font-weight:600; font-style:italic; color:var(--rose-600); }
+.credit-line a{
+  color:var(--wine-700); text-decoration:none; border-bottom:1px solid rgba(138,44,71,0.35);
+  transition:color .3s ease, border-color .3s ease;
+}
+.credit-line a:hover{ color:var(--rose-600); border-color:var(--rose-600); }
+.credit-line .dot{ opacity:0.5; }
 
 /* ============================================================
    RESPONSIVE
@@ -565,7 +703,7 @@ footer{ position:relative; z-index:2; text-align:center; padding:34px 20px 44px;
 <!-- LOADER -->
 <div id="loader">
   <div class="loader-heart"></div>
-  <div class="loader-text">Preparing something special for you... ❤️</div>
+  <div class="loader-text">Ek chhota sa surprise sirf tumhare liye... ❤️</div>
   <div class="loader-bar"><div class="loader-bar-fill" id="loaderFill"></div></div>
 </div>
 
@@ -574,6 +712,28 @@ footer{ position:relative; z-index:2; text-align:center; padding:34px 20px 44px;
 <canvas id="fireworks-canvas"></canvas>
 <div id="cursor-glow"></div>
 <div class="decor-layer" id="decorLayer"></div>
+<div id="sky-layer">
+  <div class="sky-moon"></div>
+  <div class="aurora-glow" id="auroraGlow"></div>
+</div>
+
+<!-- GALLERY LIGHTBOX -->
+<div id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close">✕</button>
+  <div class="lightbox-frame" id="lightboxFrame">
+    <span class="icon">📷</span>
+    <span>replace me with your favourite photo</span>
+  </div>
+</div>
+
+<!-- HIDDEN SECRET MESSAGE -->
+<div id="secretOverlay">
+  <div class="glass-card secret-card">
+    <div class="icon">🤫💌</div>
+    <p>Psst... this whole website is just one more way of saying I've loved you since day one, and I'll keep finding new ways to say it. Happy Birthday, kuchupuchuu 🌷</p>
+    <button class="secret-close" id="secretClose">close</button>
+  </div>
+</div>
 
 <!-- AUDIO -->
 <audio id="bgMusic" loop preload="none">
@@ -583,7 +743,7 @@ footer{ position:relative; z-index:2; text-align:center; padding:34px 20px 44px;
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">kuchu<span>puchuu</span> ❤️</div>
+  <div class="nav-logo secret-trigger" id="secretTrigger" title="tap me">kuchu<span>puchuu</span> ❤️</div>
   <button id="music-toggle" aria-label="Toggle music">🔇</button>
 </nav>
 
@@ -722,13 +882,13 @@ At last 😘sari probelm se dur rho siwaye mere 😂
   <div class="eyebrow">Moments worth keeping</div>
   <h2 class="section-title">Our Gallery</h2>
   <p class="section-sub">Elegant frames, ready and waiting — drop your favourite photos of us in here.</p>
-  <div class="gallery-grid">
-    <div class="gallery-frame"><span class="icon">📷</span><span>add a photo</span></div>
-    <div class="gallery-frame"><span class="icon">💑</span><span>add a photo</span></div>
-    <div class="gallery-frame"><span class="icon">🌷</span><span>add a photo</span></div>
-    <div class="gallery-frame"><span class="icon">🎂</span><span>add a photo</span></div>
-    <div class="gallery-frame"><span class="icon">🌙</span><span>add a photo</span></div>
-    <div class="gallery-frame"><span class="icon">✨</span><span>add a photo</span></div>
+  <div class="gallery-grid" id="galleryGrid">
+    <div class="gallery-frame" data-icon="📷" data-caption="our first photo together"><span class="icon">📷</span><span>add a photo</span></div>
+    <div class="gallery-frame" data-icon="💑" data-caption="a favourite moment"><span class="icon">💑</span><span>add a photo</span></div>
+    <div class="gallery-frame" data-icon="🌷" data-caption="the day you smiled the most"><span class="icon">🌷</span><span>add a photo</span></div>
+    <div class="gallery-frame" data-icon="🎂" data-caption="a birthday to remember"><span class="icon">🎂</span><span>add a photo</span></div>
+    <div class="gallery-frame" data-icon="🌙" data-caption="a late night we talked till dawn"><span class="icon">🌙</span><span>add a photo</span></div>
+    <div class="gallery-frame" data-icon="✨" data-caption="just us, being us"><span class="icon">✨</span><span>add a photo</span></div>
   </div>
 </section>
 
@@ -760,11 +920,21 @@ At last 😘sari probelm se dur rho siwaye mere 😂
 <!-- FINAL SURPRISE -->
 <section class="finale" id="finaleSection">
   <div class="finale-heart">❤️</div>
-  <div class="finale-title">I'll always be beside you ❤️</div>
-  <p class="finale-sub">Happy Birthday, kuchupuchuu — today, tomorrow, and every day after. 😘😗</p>
+  <div class="finale-title">Main hamesha tumhare saath rahunga... ❤️🫂</div>
+  <p class="finale-sub">Happy Birthday once again, kuchupuchuu 😘🌷</p>
 </section>
 
-<footer>made with 💗 for kuchupuchuu · 10th August</footer>
+<footer>
+  <div>made with 💗 for kuchupuchuu · 10th August</div>
+  <div class="credit-line">
+    crafted by <span class="credit-name">Sourya</span>
+    <a href="https://www.instagram.com/sourya791m" target="_blank" rel="noopener noreferrer">Instagram</a>
+    <span class="dot">·</span>
+    <a href="https://t.me/sourya791m" target="_blank" rel="noopener noreferrer">Telegram</a>
+    <span class="dot">·</span>
+    <a href="https://sourya791m.github.io/sourya791m" target="_blank" rel="noopener noreferrer">Portfolio</a>
+  </div>
+</footer>
 
 <script>
 (function(){
@@ -782,10 +952,13 @@ window.addEventListener('load', ()=>{
 /* ======================= CURSOR GLOW + SPARKLE TRAIL ======================= */
 const glow = document.getElementById('cursor-glow');
 let lastSpark = 0;
+let lastTrailHeart = 0;
+const trailEmojis = ['💗','💕','❤️'];
 window.addEventListener('pointermove', (e)=>{
   glow.style.left = e.clientX + 'px';
   glow.style.top = e.clientY + 'px';
   const now = performance.now();
+  // sparkle dots: frequent, tiny glints
   if(now - lastSpark > 60){
     lastSpark = now;
     const s = document.createElement('div');
@@ -794,6 +967,17 @@ window.addEventListener('pointermove', (e)=>{
     s.style.top = (e.clientY + (Math.random()*10-5)) + 'px';
     document.body.appendChild(s);
     setTimeout(()=> s.remove(), 900);
+  }
+  // trail hearts: sparser, float up and fade behind the cursor
+  if(now - lastTrailHeart > 260){
+    lastTrailHeart = now;
+    const h = document.createElement('div');
+    h.className = 'trail-heart';
+    h.textContent = trailEmojis[Math.floor(Math.random()*trailEmojis.length)];
+    h.style.left = e.clientX + 'px';
+    h.style.top = e.clientY + 'px';
+    document.body.appendChild(h);
+    setTimeout(()=> h.remove(), 1000);
   }
 });
 
@@ -835,6 +1019,40 @@ setInterval(spawnHeart, 900);
 setInterval(spawnRose, 1400);
 setInterval(spawnButterfly, 4500);
 for(let i=0;i<4;i++){ setTimeout(spawnButterfly, i*800); }
+
+/* ======================= SKY LAYER: stars, shooting stars, fireflies ======================= */
+const skyLayer = document.getElementById('sky-layer');
+// a fixed field of gently twinkling stars, scattered once on load
+for(let i=0;i<40;i++){
+  const star = document.createElement('div');
+  star.className = 'sky-star';
+  star.style.left = Math.random()*100 + 'vw';
+  star.style.top = Math.random()*70 + 'vh';
+  star.style.animationDelay = (Math.random()*3) + 's';
+  star.style.animationDuration = (2 + Math.random()*3) + 's';
+  skyLayer.appendChild(star);
+}
+// fireflies drifting low on the page, warm and glowing
+for(let i=0;i<10;i++){
+  const fly = document.createElement('div');
+  fly.className = 'firefly';
+  fly.style.left = Math.random()*100 + 'vw';
+  fly.style.top = (40 + Math.random()*55) + 'vh';
+  fly.style.animationDuration = (6 + Math.random()*5) + 's, ' + (2 + Math.random()*2) + 's';
+  skyLayer.appendChild(fly);
+}
+// an occasional shooting star streaking across
+function spawnShootingStar(){
+  const star = document.createElement('div');
+  star.className = 'shooting-star';
+  star.style.top = (Math.random()*35) + 'vh';
+  star.style.left = (55 + Math.random()*35) + 'vw';
+  skyLayer.appendChild(star);
+  requestAnimationFrame(()=> star.classList.add('fire'));
+  setTimeout(()=> star.remove(), 1600);
+}
+setInterval(spawnShootingStar, 6000);
+setTimeout(spawnShootingStar, 1500);
 
 /* ======================= BACKGROUND CANVAS: ambient sparkle particles ======================= */
 const bgCanvas = document.getElementById('bg-canvas');
@@ -1132,16 +1350,37 @@ wishesIO.observe(document.getElementById('wishesSection'));
 
 /* ======================= FINAL SURPRISE ======================= */
 let finaleTriggered = false;
+const finaleSection = document.getElementById('finaleSection');
 const finaleIO = new IntersectionObserver((entries)=>{
   entries.forEach(entry=>{
     if(entry.isIntersecting && !finaleTriggered){
       finaleTriggered = true;
+      finaleSection.classList.add('deepen');
+      document.getElementById('auroraGlow').classList.add('show');
       startFireworks(6000);
       finaleIO.disconnect();
     }
   });
 }, {threshold:0.5});
-finaleIO.observe(document.getElementById('finaleSection'));
+finaleIO.observe(finaleSection);
+
+/* ======================= GALLERY LIGHTBOX ======================= */
+const lightbox = document.getElementById('lightbox');
+const lightboxFrame = document.getElementById('lightboxFrame');
+document.querySelectorAll('#galleryGrid .gallery-frame').forEach(frame=>{
+  frame.addEventListener('click', ()=>{
+    lightboxFrame.innerHTML = `<span class="icon">${frame.dataset.icon}</span><span>${frame.dataset.caption}</span>`;
+    lightbox.classList.add('show');
+  });
+});
+document.getElementById('lightboxClose').addEventListener('click', ()=> lightbox.classList.remove('show'));
+lightbox.addEventListener('click', (e)=>{ if(e.target === lightbox) lightbox.classList.remove('show'); });
+
+/* ======================= HIDDEN SECRET MESSAGE ======================= */
+const secretOverlay = document.getElementById('secretOverlay');
+document.getElementById('secretTrigger').addEventListener('click', ()=> secretOverlay.classList.add('show'));
+document.getElementById('secretClose').addEventListener('click', ()=> secretOverlay.classList.remove('show'));
+secretOverlay.addEventListener('click', (e)=>{ if(e.target === secretOverlay) secretOverlay.classList.remove('show'); });
 
 })();
 </script>
