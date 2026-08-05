@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sourya791m.github.io/Birthday-Website/sitemap.xml
