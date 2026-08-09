@@ -220,6 +220,19 @@ musicBtn.addEventListener('click', ()=>{
     music.play().then(()=>{ musicPlaying = true; musicBtn.textContent = '🔊'; musicBtn.classList.add('playing'); }).catch(()=>{});
   }
 });
+// browsers block audio-with-sound until the visitor interacts with the page at
+// least once — this listens for that very first tap/click/keypress anywhere
+// (not just the music button) and starts the music right then, which is the
+// closest real autoplay behaviour a browser will allow
+let firstGestureHandled = false;
+function unlockMusicOnFirstGesture(){
+  if(firstGestureHandled || musicPlaying) return;
+  firstGestureHandled = true;
+  music.play().then(()=>{ musicPlaying = true; musicBtn.textContent = '🔊'; musicBtn.classList.add('playing'); }).catch(()=>{});
+}
+['pointerdown','keydown','touchstart'].forEach(evt=>{
+  window.addEventListener(evt, unlockMusicOnFirstGesture, { once:true, passive:true });
+});
 
 /* ======================= HERO CTA -> scroll + confetti burst ======================= */
 document.getElementById('openSurpriseBtn').addEventListener('click', ()=>{
@@ -257,11 +270,11 @@ function updateCountdown(){
     document.getElementById('cdHours').textContent = '00';
     document.getElementById('cdMins').textContent = '00';
     document.getElementById('cdSecs').textContent = '00';
-    caption.textContent = "it's your day, my love ❤️";
+    caption.textContent = "aaj tumhara din hai, meri jaan ❤️";
     return;
   }
   const isToday = target.getDate() === now.getDate() && target.getMonth() === now.getMonth() && target.getFullYear() === now.getFullYear();
-  caption.textContent = isToday ? "counting down the last moments of your day ❤️" : "until your next birthday, my love ❤️";
+  caption.textContent = isToday ? "tumhare din ke aakhri pal gin rahe hain ❤️" : "tumhare agle birthday tak, meri jaan ❤️";
   const d = Math.floor(diff/(1000*60*60*24));
   diff -= d*(1000*60*60*24);
   const h = Math.floor(diff/(1000*60*60));
@@ -279,11 +292,9 @@ setInterval(updateCountdown, 1000);
 
 /* ======================= LOVE NOTES ======================= */
 const noteTexts = [
-  "You're my favourite hello and hardest goodbye.",
-  "Every love story is beautiful, but ours is my favourite.",
-  "You make ordinary days feel like celebrations.",
-  "Home isn't a place, it's you.",
-  "I fall for you a little more, every single day."
+  "Tum mera favourite hello aur sabse mushkil goodbye ho.",
+  "Ghar koi jagah nahi, tum ho.",
+  "Har din thoda aur tumpe fida hota hoon."
 ];
 const notesWrap = document.getElementById('notesWrap');
 noteTexts.forEach((text,i)=>{
@@ -322,14 +333,14 @@ let cakeCut = false;
 bigCake.addEventListener('click', ()=>{
   if(cakeCut) return;
   cakeCut = true;
-  cakeHint.textContent = 'blowing out the candles...';
+  cakeHint.textContent = 'candles bujh rahi hain...';
   const candles = candleRow.querySelectorAll('.c');
   candles.forEach((c,i)=>{
     setTimeout(()=> c.classList.add('blown'), 350 + i*260);
   });
   setTimeout(()=>{
     bigCake.classList.add('cut');
-    cakeHint.textContent = 'wish made ✨';
+    cakeHint.textContent = 'wish ho gayi ✨';
     cakeSliceMsg.classList.add('show');
     launchFirework(window.innerWidth/2, window.innerHeight*0.45);
     fwCanvas.classList.add('active'); fwActive = true; fwLoop();
@@ -547,12 +558,12 @@ document.getElementById('shareBtn').addEventListener('click', async ()=>{
       await navigator.share(shareData);
     } else {
       await navigator.clipboard.writeText(shareData.url);
-      showToast('Link copied to clipboard 💌');
+      showToast('Link copy ho gaya 💌');
     }
   }catch(err){
     // user cancelled the share sheet, or clipboard was blocked — fail silently either way
     if(err && err.name !== 'AbortError'){
-      showToast('Could not share right now — please copy the link manually.');
+      showToast('Abhi share nahi ho paaya — link manually copy kar lo.');
     }
   }
 });
@@ -573,7 +584,7 @@ const downloadBtn = document.getElementById('downloadMemoryBtn');
 downloadBtn.addEventListener('click', async ()=>{
   downloadBtn.disabled = true;
   const originalLabel = downloadBtn.textContent;
-  downloadBtn.textContent = 'preparing your memory...';
+  downloadBtn.textContent = 'tumhari yaad taiyaar ho rahi hai...';
   try{
     const html2canvas = await loadHtml2Canvas();
     const canvas = await html2canvas(document.getElementById('finaleSection'), {
@@ -585,9 +596,9 @@ downloadBtn.addEventListener('click', async ()=>{
     link.download = 'kuchupuchuu-birthday-memory.png';
     link.href = canvas.toDataURL('image/png');
     link.click();
-    showToast('Memory saved 📸');
+    showToast('Yaad save ho gayi 📸');
   }catch(err){
-    showToast('Could not generate the image — please check your connection and try again.');
+    showToast('Image generate nahi ho payi — apna connection check karke dubara try karo.');
   }finally{
     downloadBtn.disabled = false;
     downloadBtn.textContent = originalLabel;
@@ -611,28 +622,13 @@ document.addEventListener('click', (e)=>{
 (function setDynamicGreeting(){
   const hour = new Date().getHours();
   let greeting;
-  if(hour < 5) greeting = '🌙 A magical late night just for you';
-  else if(hour < 12) greeting = '☀️ Good morning, my love';
-  else if(hour < 17) greeting = '🌸 Good afternoon, kuchupuchuu';
-  else if(hour < 21) greeting = '🌇 Good evening, my forever person';
-  else greeting = '🌙 A magical night, just for you';
+  if(hour < 5) greeting = '🌙 Tumhare liye ek magical raat';
+  else if(hour < 12) greeting = '☀️ Good morning, meri jaan';
+  else if(hour < 17) greeting = '🌸 Shubh dopahar, kuchupuchuu';
+  else if(hour < 21) greeting = '🌇 Shubh sandhya, mere forever person';
+  else greeting = '🌙 Tumhare liye ek magical raat';
   document.getElementById('dynamicGreeting').textContent = `✨ ${greeting} ✨`;
 })();
-
-/* ======================= RANDOM CUTE COMPLIMENTS ======================= */
-const compliments = [
-  "your smile could out-shine every light on this page ✨",
-  "you make ordinary moments feel like magic 💫",
-  "the world got a little softer the day you arrived 🌷",
-  "you're proof that some people are just built out of sunshine ☀️",
-  "loving you is the easiest, best decision I keep making 🥹❤️",
-  "you're someone's whole heart — mine 🫶"
-];
-const complimentChip = document.getElementById('complimentChip');
-complimentChip.addEventListener('click', ()=>{
-  const pick = compliments[Math.floor(Math.random()*compliments.length)];
-  showToast(pick, 3200);
-});
 
 /* ======================= AUTO-PAUSE MUSIC WHEN TAB IS INACTIVE ======================= */
 document.addEventListener('visibilitychange', ()=>{

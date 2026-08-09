@@ -33,13 +33,11 @@ built with plain HTML, CSS, and JavaScript (no frameworks, no build step).
   is inactive (see `music/README.txt` to add a real track)
 - **Dark / light / system theme** toggle, saved to `localStorage`
 - Scroll progress bar, animated scroll-to-top button
-- Floating social buttons (Instagram / Telegram / Website) with tooltips,
-  hover glow, and ripple feedback
-- **Share button** using the Web Share API, with a clipboard-copy fallback
-  and toast confirmation
+- A single floating Share button (Web Share API with clipboard fallback) —
+  no promotional/social-account buttons on the live page by design
 - **"Download This Memory"** button that saves the finale section as a PNG
   (via `html2canvas`, loaded on demand)
-- Random cute-compliment chip and a time-of-day dynamic greeting
+- Time-of-day dynamic greeting on the hero section
 - Hidden secret message (tap the name in the top-left corner 🤫)
 - Installable **PWA**: manifest, service worker, offline app-shell caching,
   custom icons

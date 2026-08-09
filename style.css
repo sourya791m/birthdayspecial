@@ -445,8 +445,6 @@ nav{
   50%{ box-shadow:0 18px 46px -10px rgba(232,92,138,0.75), 0 0 0 12px rgba(255,177,204,0); }
 }
 .hero-cta:hover{ transform:translateY(-4px) scale(1.04); background-position:100% center; }
-.hero-scroll-hint{ margin-top:56px; font-size:0.8rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--wine-700); opacity:0.6; animation:bob 2s ease-in-out infinite; }
-@keyframes bob{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(8px);} }
 
 /* ============================================================
    MESSAGE SECTION
@@ -497,7 +495,7 @@ nav{
 /* ============================================================
    REASONS
    ============================================================ */
-.reasons-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+.reasons-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:22px; max-width:760px; margin:0 auto; }
 .reason-card{
   padding:30px 26px; position:relative;
   transition:transform .45s cubic-bezier(.22,1,.36,1), box-shadow .45s ease;
@@ -657,19 +655,6 @@ nav{
 .finale.deepen .finale-title{ color:var(--gold-300); transition:color 1.2s ease; }
 .finale.deepen .finale-sub{ color:var(--blush-100); }
 
-footer{ position:relative; z-index:2; text-align:center; padding:34px 20px 44px; font-size:0.85rem; color:var(--wine-700); opacity:0.85; }
-.credit-line{
-  margin-top:10px; font-size:0.8rem; letter-spacing:0.02em;
-  display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap;
-}
-.credit-name{ font-family:var(--font-display); font-weight:600; font-style:italic; color:var(--rose-600); }
-.credit-line a{
-  color:var(--wine-700); text-decoration:none; border-bottom:1px solid rgba(138,44,71,0.35);
-  transition:color .3s ease, border-color .3s ease;
-}
-.credit-line a:hover{ color:var(--rose-600); border-color:var(--rose-600); }
-.credit-line .dot{ opacity:0.5; }
-
 /* ============================================================
    RESPONSIVE
    ============================================================ */
@@ -725,17 +710,6 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible{
 #theme-toggle:hover{ transform:scale(1.08) rotate(12deg); }
 
 /* ============================================================
-   DYNAMIC GREETING / COMPLIMENT CHIP
-   ============================================================ */
-.compliment-chip{
-  margin-top:22px; border:1px solid var(--glass-border); background:var(--glass);
-  color:var(--wine-700); font-family:var(--font-body); font-weight:600; font-size:0.85rem;
-  padding:10px 20px; border-radius:30px; cursor:pointer; letter-spacing:0.02em;
-  transition:transform .3s ease, background .3s ease, color .3s ease;
-}
-.compliment-chip:hover{ transform:translateY(-3px); background:var(--glass-strong); color:var(--rose-600); }
-
-/* ============================================================
    TOAST
    ============================================================ */
 #toast{
@@ -770,28 +744,9 @@ footer#siteFooter{ position:relative; z-index:2; padding:20px 16px 120px; displa
   width:100%; max-width:560px; padding:34px 30px; text-align:center;
 }
 .footer-line{ font-size:0.95rem; color:var(--wine-700); }
-.footer-credit{ margin-top:6px; font-family:var(--font-script); font-style:italic; font-size:1.1rem; color:var(--wine-900); }
-.credit-name{ color:var(--rose-600); font-weight:600; }
-.footer-socials{ margin-top:20px; display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap; }
-.footer-social-btn{
-  display:flex; align-items:center; gap:8px; text-decoration:none;
-  padding:10px 18px; border-radius:30px; color:var(--wine-900);
-  background:var(--glass-strong); border:1px solid var(--glass-border);
-  font-family:var(--font-body); font-weight:600; font-size:0.85rem;
-  transition:transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s ease, color .3s ease;
-}
-.footer-social-btn:hover{
-  transform:translateY(-4px) scale(1.05);
-  box-shadow:0 14px 28px -10px rgba(232,92,138,0.5);
-  color:var(--rose-600);
-}
-.fs-icon{ font-size:1.1rem; animation:iconBob 2.6s ease-in-out infinite; }
-.footer-social-btn:nth-child(2) .fs-icon{ animation-delay:.3s; }
-.footer-social-btn:nth-child(3) .fs-icon{ animation-delay:.6s; }
-@keyframes iconBob{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-3px);} }
 
 /* ============================================================
-   FLOATING FAB CLUSTER (social + share)
+   FLOATING FAB CLUSTER (share button)
    ============================================================ */
 .fab-cluster{
   position:fixed; right:18px; bottom:96px; z-index:9200;
@@ -876,7 +831,6 @@ html[data-theme="dark"] .reason-card h3,
 html[data-theme="dark"] .tl-item h4,
 html[data-theme="dark"] .message-text,
 html[data-theme="dark"] .wish-item p,
-html[data-theme="dark"] .footer-credit,
 html[data-theme="dark"] .nav-logo{
   color:var(--blush-50);
 }
