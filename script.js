@@ -77,7 +77,7 @@ function spawnButterfly(){
   setTimeout(()=> b.remove(), 20000);
 }
 setInterval(spawnHeart, 900);
-setInterval(spawnRose, 1400);
+setInterval(spawnRose, 4200);
 setInterval(spawnButterfly, 4500);
 for(let i=0;i<4;i++){ setTimeout(spawnButterfly, i*800); }
 
@@ -436,18 +436,6 @@ const finaleIO = new IntersectionObserver((entries)=>{
 }, {threshold:0.5});
 finaleIO.observe(finaleSection);
 
-/* ======================= GALLERY LIGHTBOX ======================= */
-const lightbox = document.getElementById('lightbox');
-const lightboxFrame = document.getElementById('lightboxFrame');
-document.querySelectorAll('#galleryGrid .gallery-frame').forEach(frame=>{
-  frame.addEventListener('click', ()=>{
-    lightboxFrame.innerHTML = `<span class="icon">${frame.dataset.icon}</span><span>${frame.dataset.caption}</span>`;
-    lightbox.classList.add('show');
-  });
-});
-document.getElementById('lightboxClose').addEventListener('click', ()=> lightbox.classList.remove('show'));
-lightbox.addEventListener('click', (e)=>{ if(e.target === lightbox) lightbox.classList.remove('show'); });
-
 /* ======================= HIDDEN SECRET MESSAGE ======================= */
 const secretOverlay = document.getElementById('secretOverlay');
 document.getElementById('secretTrigger').addEventListener('click', ()=> secretOverlay.classList.add('show'));
@@ -466,7 +454,6 @@ function makeKeyboardClickable(el){
   });
 }
 ['secretTrigger','giftBox','bigCake'].forEach(id=> makeKeyboardClickable(document.getElementById(id)));
-document.querySelectorAll('.gallery-frame').forEach(makeKeyboardClickable);
 
 /* ======================= TOAST NOTIFICATIONS ======================= */
 const toastEl = document.getElementById('toast');
@@ -608,7 +595,7 @@ downloadBtn.addEventListener('click', async ()=>{
 /* ======================= CLICK-ANYWHERE FLOATING HEARTS ======================= */
 document.addEventListener('click', (e)=>{
   // skip interactive controls so this doesn't visually clash with their own feedback
-  if(e.target.closest('button, a, .gallery-frame, .game-balloon, .gift-box, .big-cake')) return;
+  if(e.target.closest('button, a, .game-balloon, .gift-box, .big-cake')) return;
   const h = document.createElement('div');
   h.className = 'click-heart';
   h.textContent = ['❤️','💕','💖'][Math.floor(Math.random()*3)];

@@ -317,30 +317,6 @@ body::before{
 }
 
 /* ============================================================
-   GALLERY LIGHTBOX
-   ============================================================ */
-#lightbox{
-  position:fixed; inset:0; z-index:9500; display:flex; align-items:center; justify-content:center;
-  background:rgba(78,19,41,0.7); backdrop-filter:blur(8px); padding:20px;
-  opacity:0; visibility:hidden; transition:opacity .4s ease, visibility .4s ease;
-}
-#lightbox.show{ opacity:1; visibility:visible; }
-.lightbox-frame{
-  width:min(420px,90vw); aspect-ratio:1/1; border-radius:22px; border:4px solid #fff;
-  background:linear-gradient(140deg, var(--blush-100), var(--pink-300));
-  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px;
-  box-shadow:var(--shadow-deep); transform:scale(0.88); transition:transform .4s cubic-bezier(.34,1.4,.64,1);
-}
-#lightbox.show .lightbox-frame{ transform:scale(1); }
-.lightbox-frame .icon{ font-size:3rem; }
-.lightbox-frame span{ font-family:var(--font-script); font-style:italic; color:var(--wine-700); }
-.lightbox-close{
-  position:absolute; top:24px; right:28px; width:42px; height:42px; border-radius:50%;
-  border:1px solid rgba(255,255,255,0.5); background:rgba(255,255,255,0.2); color:#fff;
-  font-size:1.3rem; cursor:pointer; display:flex; align-items:center; justify-content:center;
-}
-
-/* ============================================================
    NAV
    ============================================================ */
 nav{
@@ -592,22 +568,6 @@ nav{
 .score-pill{ position:absolute; top:16px; right:16px; z-index:3; background:var(--glass-strong); padding:8px 16px; border-radius:20px; font-weight:700; color:var(--wine-900); }
 
 /* ============================================================
-   GALLERY
-   ============================================================ */
-.gallery-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
-.gallery-frame{
-  aspect-ratio:1/1; border-radius:20px; position:relative; overflow:hidden;
-  background:linear-gradient(140deg, var(--blush-100), var(--pink-300));
-  display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px;
-  border:3px solid #fff; box-shadow:var(--shadow-soft);
-  transition:transform .5s cubic-bezier(.22,1,.36,1);
-}
-.gallery-frame:hover{ transform:scale(1.04) rotate(-1deg); }
-.gallery-frame .icon{ font-size:2.2rem; opacity:0.7; }
-.gallery-frame span{ font-family:var(--font-script); font-style:italic; color:var(--wine-700); font-size:0.95rem; }
-.gallery-frame::before{ content:""; position:absolute; inset:0; background:linear-gradient(135deg, rgba(255,255,255,0.4), transparent 60%); }
-
-/* ============================================================
    TIMELINE
    ============================================================ */
 .timeline{ position:relative; padding-left:34px; }
@@ -661,11 +621,9 @@ nav{
 @media (max-width:860px){
   .counter-grid{ grid-template-columns:repeat(2,1fr); }
   .reasons-grid{ grid-template-columns:1fr 1fr; }
-  .gallery-grid{ grid-template-columns:1fr 1fr; }
 }
 @media (max-width:560px){
   .reasons-grid{ grid-template-columns:1fr; }
-  .gallery-grid{ grid-template-columns:1fr 1fr; }
   .counter-grid{ grid-template-columns:repeat(2,1fr); gap:12px; }
   .message-card::before{ font-size:5rem; }
   .balloon-game{ height:360px; }

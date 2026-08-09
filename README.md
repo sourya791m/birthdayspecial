@@ -25,8 +25,6 @@ built with plain HTML, CSS, and JavaScript (no frameworks, no build step).
 - Interactive **cake cutting**: candles blow out automatically, then the
   cake "cuts," with a wish message and fireworks
 - **Balloon Burst** mini-game with confetti on every pop
-- Photo **gallery with a lightbox** (placeholder frames — see
-  `images/gallery/README.txt` to add real photos)
 - Love-journey **timeline**
 - Full-screen, dark-romantic **finale** with fireworks and a glowing message
 - Background music with a mute/unmute toggle that auto-pauses when the tab
@@ -61,9 +59,6 @@ Birthday-Website/
 │── README.md               → this file
 │── music/
 │     └── README.txt        → where to drop your instrumental track
-│── images/
-│     └── gallery/
-│           └── README.txt  → how to wire real photos into the gallery
 │── fonts/
 │     └── README.md         → notes on the Google Fonts CDN / self-hosting
 │── assets/
@@ -107,8 +102,6 @@ Vercel. No configuration needed — it's a static site.
 
 - **Music** — add `romantic-birthday-instrumental.mp3` to `music/` (see
   `music/README.txt`).
-- **Photos** — add images to `images/gallery/` and swap them into the
-  gallery frames in `index.html` (see `images/gallery/README.txt`).
 - **Colors** — every color is a CSS variable at the top of `style.css`
   under `:root` (e.g. `--rose-600`, `--gold-500`); change them once and the
   whole site updates.
